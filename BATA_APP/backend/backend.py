@@ -3,7 +3,7 @@ from typing import Union
 import io
 from io import StringIO
 import csv
-
+from ..models.Bata_model import Incidencia, MonthValues, Operador
 import reflex as rx
 from sqlmodel import String, asc, cast, desc, func, or_, select
 
@@ -36,33 +36,6 @@ def _get_percentage_change(
 #             position="bottom-right",
 #         )
 
-class Incidencia(rx.Model, table=True):
-    """The incidencia model."""
-
-    name: str
-    phone: str
-    address: str
-    motivo: str
-    usuario: str
-    date: str
-    status: str
-    bitrix: str
-
-
-class MonthValues(rx.Base):
-    """Values for a month."""
-
-    num_incidencias: int = 0
-    num_solucionadas: int = 0
-    num_pendientes: int = 0
-    num_bitrix: int = 0
-
-class Operador(rx.Model, table=True):
-    """The operador model."""
-    nombre: str
-    telefono: str
-    email: str
-    status: str
 
 
 class State(rx.State):

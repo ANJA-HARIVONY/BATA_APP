@@ -3,7 +3,7 @@ import reflex as rx
 from ..backend.backend import Incidencia, State
 from ..components.form_field import form_field
 from ..components.status_badges import status_badge
-
+from ..models.Bata_model import Incidencia
 
 def show_incidencia(user: Incidencia):
     """Show a customer in a table row."""
