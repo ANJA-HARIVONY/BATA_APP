@@ -1,62 +1,44 @@
-<<<<<<< HEAD
-# Customer Data App
+# BATA APP
 
-This app is used to showcase and edit tabular data live in an app. It links up with a persistent database, such as [Neon](https://neon.tech). 
 
-## Usage 
+Une application web moderne développée avec **Reflex** pour [décrivez brièvement l'objectif de l'application].
 
-First clone the repo locally.
-```bash
-git clone https://github.com/reflex-dev/templates/tree/main/customer_data_app
-```
-Then set up a virtual environment as outlined in our documentation. After this run `pip install -r requirements.txt`.
+## 🚀 Fonctionnalités
 
-First, create migration scripts based on the `rx.Model` definitions and update
-the default sqlite database with that schema. This only needs to be done once
-when a new app is created.
+- Liste des fonctionnalités principales
+- Exemple : Authentification des utilisateurs
+- Exemple : Gestion des [entités principales]
+- Exemple : Tableau de bord interactif
 
-```bash
-reflex db init
-```
+## 📦 Installation
 
-Then run the app with the following command:
+### Prérequis
+- Python 3.7+
+- Pip
+- [Autres dépendances si nécessaire]
 
-```bash
-reflex run
-```
+### Étapes d'installation
+1. Clonez le dépôt :
+   ```bash
+   git clone https://github.com/ANJA-HARIVONY/BATA_APP.git
+   cd BATA_APP
+2. Installez les dépendances:
+    ```bash
+    pip install -r requirements.txt
+3. Lancez l'application:
+    ```bash
+    reflex run
 
-## Applying Database Schema Changes
-
-If changes are made to the database models after initialization, they can be
-applied by running the following commands:
-
-```bash
-reflex db makemigrations --message "Brief description of the change"
-```
-
-```bash
-reflex db migrate
-```
-
-## Setting an external Database
-
-It is also possible to set an external database so that your data is not lost every time the app closes and so you can deploy your app and maintain data. 
-
-In the `rxconfig.py` file we accept a `db_url` key and recognize the `DB_URL`
-environment variable. This can be set to any valid SQLAlchemy database URL.
-
-To set one run the following command in your terminal:
-
-```bash
-export DB_URL="postgresql+psycopg://appuser:mysecretpassword@localhost:5432/mydatabase"
-```
-
-**Be sure to install the appropriate DB driver in your environment.** In the
-*example above, that would be `pip install "psycopg[binary]"`.
-
-After configuring a different database, execute `reflex db migrate` to populate
-it with the latest schema before running the app.
-=======
-# BATA_APP
-Atención al cliente BATA
->>>>>>> 7fe92da9df127646ded6306a4eaeaa3c9647829d
+#### Developpement
+1. Structure du projet
+BATA_APP/
+├── assets/          # Fichiers statiques (images, CSS)
+├── bata_app/        # Code source principal
+│   ├── __init__.py
+│   ├── pages/       # Différentes pages de l'application
+│   └── state.py     # Gestion d'état Reflex
+├── requirements.txt # Dépendances
+└── README.md
+##### Contact
+1. anjaharivoni@gmail.com
+2. GitHub: ANJA-HARIVONY
