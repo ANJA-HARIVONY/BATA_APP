@@ -2,9 +2,9 @@
 
 import reflex as rx
 
-from ..backend.table_state import TableState
+from ..backend.incidencias_state import IncidenciasState
 from ..templates import template
-#from ..views.table import main_table
+from ..views.incidencia_views import main_table
 
 
 @template(route="/incidencia_page", title="Incidencias")
@@ -17,8 +17,7 @@ def table_incidencia() -> rx.Component:
     """
     return rx.vstack(
         rx.heading("Table", size="5"),
-        #main_table(),
-        rx.text("Bienvenue dans la page des incidences"),
+        main_table(),
         spacing="8",
         width="100%",
     )

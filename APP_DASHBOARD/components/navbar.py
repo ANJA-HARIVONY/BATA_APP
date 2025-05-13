@@ -31,6 +31,7 @@ def menu_item(text: str, url: str) -> rx.Component:
                 text,
                 ("Overview", menu_item_icon("home")),
                 ("Table", menu_item_icon("table-2")),
+                ("Incidencias", menu_item_icon("calendar-check")),
                 ("About", menu_item_icon("book-open")),
                 ("Profile", menu_item_icon("user")),
                 ("Settings", menu_item_icon("settings")),
@@ -109,6 +110,7 @@ def menu_button() -> rx.Component:
     ordered_page_routes = [
         "/",
         "/table",
+        "/incidencia_page",
         "/about",
         "/profile",
         "/settings",

@@ -363,29 +363,8 @@ class State(rx.State):
         for incidencia in self.incidencias:
             writer.writerow(incidencia.dict())
         return output.getvalue()
-    
-    # Conversion des données en format XML
-    def _convert_to_xml(self):
-        """Convert user data to XML format."""
-        fieldnames = list(Incidencia.__fields__)
-        output = io.StringIO()
-        writer = csv.DictWriter(output, fieldnames=fieldnames)
-        writer.writeheader()
-        for incidencia in self.incidencias_all:
-            writer.writerow(incidencia.dict())
-        return output.getvalue()
-    
-    # Téléchargement des données en format XML
-    def download_xml_data(self):
-        """Download the data in XML format."""
-        xml_data = self._convert_to_xml()
-        filename = datetime.now().strftime("%Y-%m-%d") + "_data.xml"
-        return rx.download(
-            data=xml_data,
-            filename=filename,
-        )
-    
 
+    
     # Téléchargement des données en format CSV
     def download_csv_data(self):
         """Download the data in CSV format."""
@@ -395,17 +374,3 @@ class State(rx.State):
             data=csv_data,
             filename=filename,
         )
-    
-    # Importation des données en format CSV
-    def upload_csv_data(self, file: rx.UploadFile):
-        """Upload the data in CSV format."""
-        csv_data = file.read().decode("utf-8")
-        reader = csv.DictReader(csv_data.splitlines())
-        for row in reader:
-            self.add_incidencia_to_db(row)
-        self.load_entries()
-        return rx.toast.info(
-            "Datos cargados correctamente desde el archivo CSV",
-            position="bottom-right",
-        )
-    

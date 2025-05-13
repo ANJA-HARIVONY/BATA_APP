@@ -81,7 +81,7 @@ def sidebar_item(text: str, url: str) -> rx.Component:
                 text,
                 ("Overview", sidebar_item_icon("home")),
                 ("Table", sidebar_item_icon("table-2")),
-                ("Incidencia", sidebar_item_icon("table-2")),
+                ("Incidencias", sidebar_item_icon("calendar-check")),
                 ("About", sidebar_item_icon("book-open")),
                 ("Profile", sidebar_item_icon("user")),
                 ("Settings", sidebar_item_icon("settings")),
