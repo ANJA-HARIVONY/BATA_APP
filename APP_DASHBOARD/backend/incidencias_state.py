@@ -3,12 +3,11 @@ from pathlib import Path
 from typing import List
 import reflex as rx
 from sqlmodel import String, asc, cast, desc, func, or_, select
-
+from datetime import datetime
 
 # This is the incidencia class.   
-class Incidencia(rx.Base):
+class Incidencia(rx.Model, table=True):
     """The incidencia class."""
-
     name: str
     phone: str
     address: str
@@ -23,6 +22,8 @@ class IncidenciasState(rx.State):
     """The state class."""
 
     incidencias: List[Incidencia] = []
+    incidencias_all: list[Incidencia] = []
+    current_incidencia: Incidencia = Incidencia()
 
     search_value: str = ""
     sort_value: str = ""
@@ -106,6 +107,12 @@ class IncidenciasState(rx.State):
         self.offset = (self.total_pages - 1) * self.limit
     # Fin de la fonction pour la pagination
 
+    # Mise à jour automatique toutes les 5 minutes (300000 ms)
+    def update_time(self):
+        """Update the time."""
+        self.load_entries()
+
+
     # Fonction pour charger les entrées
     @rx.event
     def load_entries(self) -> list[Incidencia]:
@@ -142,6 +149,55 @@ class IncidenciasState(rx.State):
                 query = query.order_by(order)
             self.incidencias = session.exec(query).all()
             self.total_incidencias = len(self.incidencias)
+
+     # Récupération de l'incidencia
+    def get_incidencia(self, incidencia_all: Incidencia):
+        """Get the incidencia."""
+        self.current_incidencia = incidencia_all
+
+ # Ajout de l'incidencia à la base de données
+    def add_incidencia_to_db(self, form_data: dict):
+        """Add the incidencia to the database."""
+        with rx.session() as session:
+            self.current_incidencia = Incidencia(
+                date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), **form_data
+            )
+            session.add(self.current_incidencia)
+            session.commit()
+            session.refresh(self.current_incidencia)
+        self.load_entries()
+        return rx.toast.info(
+            f"Incidencia pour {self.current_incidencia.name} a été ajoutée.", position="bottom-right"
+        )
+
+    # Mise à jour de l'incidencia
+    def update_incidencia_to_db(self, form_data: dict):
+        """Update the incidencia."""
+        with rx.session() as session:
+            incidencia_all = session.exec(
+                select(Incidencia).where(Incidencia.id == self.current_incidencia.id)
+            ).first()
+            form_data.pop("id", None)
+            incidencia_all.set(**form_data)
+            session.add(incidencia_all)
+            session.commit()
+        self.load_entries()
+        return rx.toast.info(
+            f"Incidencia pour {self.current_incidencia.name} a été modifiée.",
+            position="bottom-right",
+        )
+
+    # Suppression de l'incidencia
+    def delete_incidencia(self, id: int):
+        """Delete an incidencia from the database."""
+        with rx.session() as session:
+            incidencia_all = session.exec(select(Incidencia).where(Incidencia.id == id)).first()
+            session.delete(incidencia_all)
+            session.commit()
+        self.load_entries()
+        return rx.toast.info(
+            f"Incidencia pour {incidencia_all.name} a été supprimée.", position="bottom-right"
+        )
 
     # Fonction pour trier les entrées
     def toggle_sort(self):
