@@ -208,13 +208,12 @@ def add_customer_button() -> rx.Component:
                             rx.button(
                                 "Cancelar",
                                 variant="surface",
-                                color_scheme="gray",
+        
                             ),
                         ),
                         rx.form.submit(
                             rx.dialog.close(
-                                rx.button("Agregar incidencia"),
-                                variant="surface",
+                                rx.button("Agregar incidencia", variant="solid"),
                             ),
                             as_child=True,
                         ),
@@ -244,7 +243,6 @@ def update_incidencia_dialog(user):
         rx.dialog.trigger(
             rx.button(
                 rx.icon("square-pen", size=22),
-                color_scheme="blue",
                 size="2",
                 variant="surface",
                 on_click=lambda: IncidenciasState.get_incidencia(user),
@@ -351,13 +349,13 @@ def update_incidencia_dialog(user):
                         rx.dialog.close(
                             rx.button(
                                 "Cancel",
-                                variant="soft",
-                                color_scheme="gray",
+                                variant="surface",
                             ),
                         ),
                         rx.form.submit(
                             rx.dialog.close(
                                 rx.button("Actualizar incidencia"),
+                                variant="surface",
                             ),
                             as_child=True,
                         ),
@@ -384,7 +382,7 @@ def delete_incidencia_dialog(user):
     """Delete a customer from the database."""
     return rx.dialog.root(
         rx.dialog.trigger(
-            rx.button(rx.icon("trash-2", size=22), color_scheme="red", size="2", variant="solid"),
+            rx.button(rx.icon("trash-2", size=22), size="2", variant="surface"),
         ),
         rx.dialog.content(
             rx.hstack(
@@ -393,8 +391,8 @@ def delete_incidencia_dialog(user):
             ),
             rx.dialog.close(
                 rx.hstack(
-                    rx.button("Cancelar", variant="soft", color_scheme="gray"),
-                    rx.button("Eliminar", variant="solid", color_scheme="red", on_click=lambda: IncidenciasState.delete_incidencia(user.id)),
+                    rx.button("Cancelar", variant="surface"),
+                    rx.button("Eliminar", variant="surface", on_click=lambda: IncidenciasState.delete_incidencia(user.id)),
                     spacing="3",
                     mt="4",
                     justify="end",
