@@ -2,15 +2,9 @@
 assets/external/
 *.db
 *.py[cod]
-<<<<<<< HEAD
 .cursorignore
 .venv/
 .vscode/
 .web
 __pycache__/
 venv/
-=======
-.web
-__pycache__/
-.venv/
->>>>>>> 62667fe36c5f3cd4450c69a1796c4b04be75dcf6

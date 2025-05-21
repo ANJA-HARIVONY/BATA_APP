@@ -2,7 +2,8 @@ import reflex as rx
 
 from ..backend.incidencias_state import Incidencia, IncidenciasState
 from ..components.status_badge import status_badge
-from ..components.form_app import item_dialog, form_field
+from ..components.form_app import form_field
+from ..backend.operador_state import OperadorState
 
 
 # c'est le composant pour le header de la table 
@@ -172,7 +173,7 @@ def add_customer_button() -> rx.Component:
                         ),
                         # Usuario
                         rx.select(
-                            ["Esther", "Juanita", "Restituta", "Estelina", "Anja", "Crecensia"],
+                            OperadorState.nombres,
                             name="usuario",
                             direction="row",
                             as_child=True,
@@ -245,6 +246,7 @@ def update_incidencia_dialog(user):
                 rx.icon("square-pen", size=22),
                 size="2",
                 variant="surface",
+                color_scheme="sky",
                 on_click=lambda: IncidenciasState.get_incidencia(user),
             ),
         ),
@@ -356,6 +358,7 @@ def update_incidencia_dialog(user):
                             rx.dialog.close(
                                 rx.button("Actualizar incidencia"),
                                 variant="surface",
+                                color_scheme="accent",
                             ),
                             as_child=True,
                         ),
@@ -392,7 +395,7 @@ def delete_incidencia_dialog(user):
             rx.dialog.close(
                 rx.hstack(
                     rx.button("Cancelar", variant="surface"),
-                    rx.button("Eliminar", variant="surface", on_click=lambda: IncidenciasState.delete_incidencia(user.id)),
+                    rx.button("Eliminar", on_click=lambda: IncidenciasState.delete_incidencia(user.id)),
                     spacing="3",
                     mt="4",
                     justify="end",

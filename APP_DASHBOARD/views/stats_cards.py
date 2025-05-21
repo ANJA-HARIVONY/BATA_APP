@@ -1,5 +1,6 @@
 import reflex as rx
 from reflex.components.radix.themes.base import LiteralAccentColor
+from ..backend.incidencias_state import IncidenciasState
 
 from .. import styles
 
@@ -19,9 +20,9 @@ def stats_card(
         if value == 0
         else float("inf")
     )
-    change = "increase" if value > prev_value else "decrease"
-    arrow_icon = "trending-up" if value > prev_value else "trending-down"
-    arrow_color = "grass" if value > prev_value else "tomato"
+    #change = "increase" if value > prev_value else "decrease"
+    #arrow_icon = "trending-up" if value > prev_value else "trending-down"
+    #arrow_color = "grass" if value > prev_value else "tomato"
     return rx.card(
         rx.vstack(
             rx.hstack(
@@ -51,21 +52,23 @@ def stats_card(
             rx.hstack(
                 rx.hstack(
                     rx.icon(
-                        tag=arrow_icon,
+                        tag="",
                         size=24,
-                        color=rx.color(arrow_color, 9),
+                        color=rx.color("gray", 9),
                     ),
                     rx.text(
-                        f"{percentage_change}%",
+                        #f"{percentage_change}%",
+                        "essai",
                         size="3",
-                        color=rx.color(arrow_color, 9),
+                        color=rx.color("gray", 9),
                         weight="medium",
                     ),
                     spacing="2",
                     align="center",
                 ),
                 rx.text(
-                    f"{change} from last month",
+                    #f"{change} from last month",
+                    "essai2",
                     size="2",
                     color=rx.color("gray", 10),
                 ),
@@ -80,12 +83,12 @@ def stats_card(
     )
 
 
-def stats_cards() -> rx.Component:
+def stats_cards(value: int) -> rx.Component:
     return rx.grid(
         stats_card(
-            stat_name="Users",
-            value=4200,
-            prev_value=3000,
+            stat_name="Total Incidencias",
+            value=value,
+            prev_value=10,
             icon="users",
             icon_color="blue",
         ),

@@ -10,7 +10,6 @@ from ..views.table import main_table
 @template(route="/table", title="Table", on_load=TableState.load_entries)
 def table() -> rx.Component:
     """The table page.
-
     Returns:
         The UI for the table page.
 

@@ -2,7 +2,7 @@ import reflex as rx
 
 from ..backend.table_state import Item, TableState
 from ..components.status_badge import status_badge
-from ..components.form_app import item_dialog
+from ..components.form_app import form_field
 
 # c'est le composant pour le header de la table 
 def _header_cell(text: str, icon: str) -> rx.Component:
@@ -157,7 +157,6 @@ def main_table() -> rx.Component:
                 spacing="3",
             ),
             # c'est le composant pour le bouton d'ajout
-            item_dialog(),
             # c'est le composant pour le bouton d'exportation
             rx.button(
                 rx.icon("arrow-down-to-line", size=20),

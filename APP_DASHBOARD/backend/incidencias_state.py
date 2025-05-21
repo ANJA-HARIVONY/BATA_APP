@@ -29,7 +29,12 @@ class IncidenciasState(rx.State):
     sort_value: str = ""
     sort_reverse: bool = False
 
+    total_incidencias_paginated: int = 0
     total_incidencias: int = 0
+    total_incidencias_pendientes: int = 0
+    total_incidencias_solucionadas: int = 0
+    total_incidencias_bitrix: int = 0
+
     offset: int = 0
     limit: int = 12  # Number of rows per page
 
@@ -113,6 +118,33 @@ class IncidenciasState(rx.State):
         self.load_entries()
 
 
+
+    def get_total_incidencias(self):
+        """Get the total incidencias."""
+        with rx.session() as session:
+            query = select(Incidencia)
+            self.total_incidencias = len(session.exec(query).all())
+            print(self.total_incidencias)
+    
+    def get_incidencias_pendientes(self):
+        """Get the incidencias pendientes."""
+        with rx.session() as session:
+            query = select(Incidencia).where(Incidencia.status == "Pendiente")
+            self.total_incidencias_pendientes = len(session.exec(query).all())
+
+    
+    def get_incidencias_solucionadas(self):
+        """Get the incidencias solucionadas."""
+        with rx.session() as session:
+            query = select(Incidencia).where(Incidencia.status == "Solucionada")
+            self.total_incidencias_solucionadas = len(session.exec(query).all())
+
+    def get_incidencias_bitrix(self):
+        """Get the incidencias bitrix."""
+        with rx.session() as session:
+            query = select(Incidencia).where(Incidencia.status == "Bitrix")
+            self.total_incidencias_bitrix = len(session.exec(query).all())
+
     # Fonction pour charger les entrées
     @rx.event
     def load_entries(self) -> list[Incidencia]:
@@ -148,7 +180,7 @@ class IncidenciasState(rx.State):
                 )
                 query = query.order_by(order)
             self.incidencias = session.exec(query).all()
-            self.total_incidencias = len(self.incidencias)
+            self.total_incidencias_paginated = len(self.incidencias)
 
      # Récupération de l'incidencia
     def get_incidencia(self, incidencia_all: Incidencia):

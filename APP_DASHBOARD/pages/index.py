@@ -9,6 +9,7 @@ from ..components.card import card
 from ..components.notification import notification
 from ..templates import template
 from ..views.acquisition_view import acquisition
+from ..backend.incidencias_state import IncidenciasState
 from ..views.charts import (
     StatsState,
     area_toggle,
@@ -20,6 +21,8 @@ from ..views.charts import (
 )
 from ..views.stats_cards import stats_cards
 from .profile import ProfileState
+
+
 
 
 def _time_data() -> rx.Component:
@@ -45,7 +48,7 @@ def tab_content_header() -> rx.Component:
     )
 
 
-@template(route="/", title="Overview", on_load=StatsState.randomize_data)
+@template(route="/", title="Overview", on_load=[StatsState.randomize_data, IncidenciasState.get_total_incidencias])
 def index() -> rx.Component:
     """The overview page.
 
@@ -77,7 +80,7 @@ def index() -> rx.Component:
             align="center",
             width="100%",
         ),
-        stats_cards(),
+        stats_cards(IncidenciasState.total_incidencias),
         card(
             rx.hstack(
                 tab_content_header(),
